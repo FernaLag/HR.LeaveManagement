@@ -1,9 +1,9 @@
-﻿using HR.LeaveManagement.Application.Persistence.Contracts;
+﻿using HR.LeaveManagement.Application.Contracts.Persistence;
 using HR.LeaveManagement.Domain;
 using HR.LeaveManagement.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace HR.LeaveManagement.Infrastructure
+namespace HR.LeaveManagement.Persistence.Repositories
 {
     public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveRequestRepository
     {
