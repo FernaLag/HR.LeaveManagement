@@ -4,6 +4,7 @@ using HR.LeaveManagement.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HR.LeaveManagement.Persistence.Migrations
 {
     [DbContext(typeof(LeaveManagementDbContext))]
-    partial class LeaveManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220731224315_SeedingLeaveTypes")]
+    partial class SeedingLeaveTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,12 +33,14 @@ namespace HR.LeaveManagement.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModifiedDate")
@@ -73,6 +77,7 @@ namespace HR.LeaveManagement.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateActioned")
@@ -88,6 +93,7 @@ namespace HR.LeaveManagement.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModifiedDate")
@@ -119,6 +125,7 @@ namespace HR.LeaveManagement.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -128,6 +135,7 @@ namespace HR.LeaveManagement.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LastModifiedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastModifiedDate")
@@ -145,16 +153,20 @@ namespace HR.LeaveManagement.Persistence.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedBy = "LeaveTypeConfiguration",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DefaultDays = 10,
+                            LastModifiedBy = "LeaveTypeConfiguration",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Vacation"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedBy = "LeaveTypeConfiguration",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DefaultDays = 10,
+                            LastModifiedBy = "LeaveTypeConfiguration",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sick"
                         });
