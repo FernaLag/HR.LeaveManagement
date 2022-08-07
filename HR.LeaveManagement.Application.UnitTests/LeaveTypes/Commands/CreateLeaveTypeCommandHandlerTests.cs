@@ -58,7 +58,7 @@ namespace HR.LeaveManagement.Application.UnitTests.LeaveTypes.Commands
         [Fact]
         public async Task InValid_LeaveType_Added()
         {
-            _leaveTypeDto.DefaultDays = -1;
+            _leaveTypeDto.DefaultDays = -5;
 
             ValidationException ex = await Should.ThrowAsync<ValidationException>(async () =>
                 await _handler.Handle(new CreateLeaveTypeCommand() { LeaveTypeDto = _leaveTypeDto }, CancellationToken.None)
