@@ -5,6 +5,7 @@ using HR.LeaveManagement.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HR.LeaveManagement.Api.Controllers
@@ -30,16 +31,17 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET api/<LeaveTypesController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<LeaveTypeDto>>> Get(int id)
+        public async Task<ActionResult<LeaveTypeDto>> Get(int id)
         {
-            var leaveTypes = await _mediator.Send(new GetLeaveTypeDetailRequest { Id = id });
-            return Ok(leaveTypes);
+            var leaveType = await _mediator.Send(new GetLeaveTypeDetailRequest { Id = id });
+            return Ok(leaveType);
         }
 
         // POST api/<LeaveTypesController>
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateLeaveTypeDto leaveType)
         {
             var command = new CreateLeaveTypeCommand { LeaveTypeDto = leaveType };
@@ -48,7 +50,10 @@ namespace HR.LeaveManagement.Api.Controllers
         }
 
         // PUT api/<LeaveTypesController>
-        [HttpPut]
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Put([FromBody] LeaveTypeDto leaveType)
         {
             await _mediator.Send(new UpdateLeaveTypeCommand { LeaveTypeDto = leaveType });
@@ -57,6 +62,9 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // DELETE api/<LeaveTypesController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
             await _mediator.Send(new DeleteLeaveTypeCommand { Id = id });

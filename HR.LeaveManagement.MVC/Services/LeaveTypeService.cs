@@ -60,7 +60,7 @@ namespace HR.LeaveManagement.MVC.Services
 
         public async Task<LeaveTypeVM> GetLeaveTypeDetails(int id)
         {
-            var leaveType = await _httpClient.LeaveTypesAll2Async(id);
+            var leaveType = await _httpClient.LeaveTypesGETAsync(id);
             return _mapper.Map<LeaveTypeVM>(leaveType);
         }
 
@@ -75,7 +75,7 @@ namespace HR.LeaveManagement.MVC.Services
             try
             {
                 LeaveTypeDto leaveTypeDto = _mapper.Map<LeaveTypeDto>(leaveType);
-                await _httpClient.LeaveTypesPUTAsync(leaveTypeDto);
+                await _httpClient.LeaveTypesPUTAsync(id.ToString(), leaveTypeDto);
                 return new Response<int>() { Success = true };
             }
             catch (ApiException ex)

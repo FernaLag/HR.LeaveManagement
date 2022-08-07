@@ -29,10 +29,10 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET api/<LeaveRequestsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<LeaveRequestDto>>> Get(int id)
+        public async Task<ActionResult<LeaveRequestDto>> Get(int id)
         {
-            var leaveRequests = await _mediator.Send(new GetLeaveRequestDetailRequest { Id = id });
-            return Ok(leaveRequests);
+            var leaveRequest = await _mediator.Send(new GetLeaveRequestDetailRequest { Id = id });
+            return Ok(leaveRequest);
         }
 
         // POST api/<LeaveRequestsController>

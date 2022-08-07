@@ -1,6 +1,7 @@
 ﻿using HR.LeaveManagement.Application.DTOs.LeaveAllocation;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Queries;
+using HR.LeaveManagement.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,15 +30,15 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET api/<LeaveAllocationsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<LeaveAllocationDto>>> Get(int id)
+        public async Task<ActionResult<LeaveAllocationDto>> Get(int id)
         {
-            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationDetailRequest { Id = id });
-            return Ok(leaveAllocations);
+            var leaveAllocation = await _mediator.Send(new GetLeaveAllocationDetailRequest { Id = id });
+            return Ok(leaveAllocation);
         }
 
         // POST api/<LeaveAllocationsController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationDto leaveAllocation)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateLeaveAllocationDto leaveAllocation)
         {
             var response = await _mediator.Send(new CreateLeaveAllocationCommand { LeaveAllocationDto = leaveAllocation });
             return Ok(response);

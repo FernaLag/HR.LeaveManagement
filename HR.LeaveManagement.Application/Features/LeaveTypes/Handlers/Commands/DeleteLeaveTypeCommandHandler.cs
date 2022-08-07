@@ -15,12 +15,12 @@ namespace HR.LeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
 {
     public class DeleteLeaveAllocationCommandHandler : IRequestHandler<DeleteLeaveAllocationCommand>
     {
-        private readonly ILeaveTypeRepository _leaveTypeRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DeleteLeaveAllocationCommandHandler(ILeaveTypeRepository leaveTypeRepository, IMapper mapper)
+        public DeleteLeaveAllocationCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _leaveTypeRepository = leaveTypeRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<Unit> Handle(DeleteLeaveAllocationCommand request, CancellationToken cancellationToken)
@@ -30,7 +30,8 @@ namespace HR.LeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
             if (leaveType == null)
                 throw new NotFoundException(nameof(LeaveType), request.Id);
 
-            await _leaveTypeRepository.Delete(leaveType);
+            await _unitOfWork.LeaveTypeRepository.Delete(leaveType);
+            await _unitOfWork.Save();
 
             return Unit.Value;
         }
