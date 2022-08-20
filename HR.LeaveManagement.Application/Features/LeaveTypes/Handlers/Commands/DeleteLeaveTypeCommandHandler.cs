@@ -9,23 +9,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Commands;
 
 namespace HR.LeaveManagement.Application.Features.LeaveTypes.Handlers.Commands
 {
-    public class DeleteLeaveAllocationCommandHandler : IRequestHandler<DeleteLeaveAllocationCommand>
+    public class DeleteLeaveTypeCommandHandler : IRequestHandler<DeleteLeaveTypeCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public DeleteLeaveAllocationCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public DeleteLeaveTypeCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Unit> Handle(DeleteLeaveAllocationCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteLeaveTypeCommand request, CancellationToken cancellationToken)
         {
-            var leaveType = _mapper.Map<LeaveType>(request.Id);
+            //var leaveType = _mapper.Map<LeaveType>(request.Id);
+            var leaveType = await _unitOfWork.LeaveTypeRepository.Get(request.Id);
 
             if (leaveType == null)
                 throw new NotFoundException(nameof(LeaveType), request.Id);

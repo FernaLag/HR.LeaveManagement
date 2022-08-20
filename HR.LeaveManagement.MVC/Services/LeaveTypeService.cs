@@ -49,7 +49,7 @@ namespace HR.LeaveManagement.MVC.Services
         {
             try
             {
-                await _httpClient.LeaveRequestsDELETEAsync(id);
+                await _httpClient.LeaveTypesDELETEAsync(id);
                 return new Response<int>() { Success = true };
             }
             catch (ApiException ex)
