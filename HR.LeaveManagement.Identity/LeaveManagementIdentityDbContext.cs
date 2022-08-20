@@ -7,7 +7,8 @@ namespace HR.LeaveManagement.Identity
 {
     public class LeaveManagementIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
-        public LeaveManagementIdentityDbContext(DbContextOptions<LeaveManagementIdentityDbContext> options) : base(options)
+        public LeaveManagementIdentityDbContext(DbContextOptions<LeaveManagementIdentityDbContext> options) 
+            : base(options)
         {
         }
 
