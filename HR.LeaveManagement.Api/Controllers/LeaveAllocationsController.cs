@@ -3,7 +3,12 @@ using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Commands
 using HR.LeaveManagement.Application.Features.LeaveAllocations.Requests.Queries;
 using HR.LeaveManagement.Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +16,7 @@ namespace HR.LeaveManagement.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LeaveAllocationsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,9 +28,9 @@ namespace HR.LeaveManagement.Api.Controllers
 
         // GET: api/<LeaveAllocationsController>
         [HttpGet]
-        public async Task<ActionResult<List<LeaveAllocationDto>>> Get()
+        public async Task<ActionResult<List<LeaveAllocationDto>>> Get(bool isLoggedInUser = false)
         {
-            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationListRequest());
+            var leaveAllocations = await _mediator.Send(new GetLeaveAllocationListRequest() { IsLoggedInUser = isLoggedInUser });
             return Ok(leaveAllocations);
         }
 
@@ -40,15 +46,17 @@ namespace HR.LeaveManagement.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateLeaveAllocationDto leaveAllocation)
         {
-            var response = await _mediator.Send(new CreateLeaveAllocationCommand { LeaveAllocationDto = leaveAllocation });
-            return Ok(response);
+            var command = new CreateLeaveAllocationCommand { LeaveAllocationDto = leaveAllocation };
+            var repsonse = await _mediator.Send(command);
+            return Ok(repsonse);
         }
 
-        // PUT api/<LeaveAllocationsController>
+        // PUT api/<LeaveAllocationsController>/5
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] UpdateLeaveAllocationDto leaveAllocation)
         {
-            await _mediator.Send(new UpdateLeaveAllocationCommand { LeaveAllocationDto = leaveAllocation });
+            var command = new UpdateLeaveAllocationCommand { LeaveAllocationDto = leaveAllocation };
+            await _mediator.Send(command);
             return NoContent();
         }
 
@@ -56,7 +64,8 @@ namespace HR.LeaveManagement.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            await _mediator.Send(new DeleteLeaveAllocationCommand { Id = id });
+            var command = new DeleteLeaveAllocationCommand { Id = id };
+            await _mediator.Send(command);
             return NoContent();
         }
     }

@@ -25,7 +25,7 @@ namespace HR.LeaveManagement.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<LeaveManagementIdentityDbContext>().AddDefaultTokenProviders();
 
-            services.AddTransient<IAuthService, IAuthService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
 
             services.AddAuthentication(options =>
